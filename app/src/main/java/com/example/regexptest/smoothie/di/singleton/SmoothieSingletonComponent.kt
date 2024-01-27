@@ -1,10 +1,10 @@
 package com.example.regexptest.smoothie.di.singleton
 
 import com.example.regexptest.smoothie.data.SmoothieRepository
+import com.example.regexptest.smoothie.data.LocalSource
 import dagger.BindsInstance
 import dagger.hilt.DefineComponent
 import dagger.hilt.EntryPoint
-import dagger.hilt.EntryPoints
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Scope
@@ -16,30 +16,12 @@ annotation class SmoothieSingleton
 
 @DefineComponent(parent = SingletonComponent::class)
 @SmoothieSingleton
-interface SmoothieSingletonComponent {
-
-    companion object {
-        val components: HashMap<String, CustomSingletonEntryPoint> = hashMapOf()
-
-        @Synchronized
-        fun getOrCreateComponent(
-            appId: String,
-            builder: SmoothieSingletonComponentBuilder,
-        ): CustomSingletonEntryPoint {
-            if (components[appId] == null) {
-                components[appId] = EntryPoints.get(
-                    builder.appId(appId).build(),
-                    CustomSingletonEntryPoint::class.java
-                )
-            }
-            return components[appId]!!
-        }
-    }
-}
+interface SmoothieSingletonComponent
 
 @DefineComponent.Builder
 interface SmoothieSingletonComponentBuilder {
     fun appId(@BindsInstance appId: String): SmoothieSingletonComponentBuilder
+    fun localSource(@BindsInstance localSource: LocalSource): SmoothieSingletonComponentBuilder
     fun build(): SmoothieSingletonComponent
 }
 
@@ -47,5 +29,6 @@ interface SmoothieSingletonComponentBuilder {
 @InstallIn(SmoothieSingletonComponent::class)
 interface CustomSingletonEntryPoint {
     fun appId(): String
+    fun localSource(): LocalSource
     fun repository(): SmoothieRepository
 }

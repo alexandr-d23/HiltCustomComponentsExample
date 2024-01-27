@@ -13,7 +13,7 @@ class ViewModelModule {
     @Provides
     @SmoothieViewModel
     fun provideInteractor(
-        dependencies: CustomSingletonEntryPoint
+        dependencies: CustomSingletonEntryPoint,
     ): SmoothieInteractor {
         return SmoothieInteractor(dependencies.appId(), dependencies.repository())
     }

@@ -1,34 +1,34 @@
-package com.example.regexptest
+package com.example.regexptest.calendar.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.regexptest.databinding.FragmentSecondBinding
+import com.example.regexptest.R
+import com.example.regexptest.calendar.di.CalendarApp
+import com.example.regexptest.databinding.FragmentCalendarBinding
+import com.example.regexptest.smoothie.di.singleton.CustomSingletonEntryPoint
 import com.example.regexptest.smoothie.presentation.SmoothieFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
 @AndroidEntryPoint
-class SecondFragment : SmoothieFragment() {
+class CalendarFragment : SmoothieFragment() {
 
-    private var _binding: FragmentSecondBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
-    override val appId: String = "Second"
+
+    @Inject
+    @CalendarApp
+    override lateinit var customSingletonEntryPoint: CustomSingletonEntryPoint
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentCalendarBinding.inflate(inflater, container, false)
         return binding.root
 
     }

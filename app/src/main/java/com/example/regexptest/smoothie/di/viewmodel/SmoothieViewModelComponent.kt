@@ -16,8 +16,7 @@ annotation class SmoothieViewModel
 
 @DefineComponent(parent = SingletonComponent::class)
 @SmoothieViewModel
-interface SmoothieViewModelComponent {
-}
+interface SmoothieViewModelComponent
 
 @DefineComponent.Builder
 interface SmoothieViewModelComponentBuilder {
@@ -27,7 +26,7 @@ interface SmoothieViewModelComponentBuilder {
 
 @EntryPoint
 @InstallIn(SmoothieViewModelComponent::class)
-interface CustomViewModelEntryPoint {
+interface SmoothieViewModelEntryPoint {
     fun singletonDependencies(): CustomSingletonEntryPoint
     fun interactor(): SmoothieInteractor
 }
