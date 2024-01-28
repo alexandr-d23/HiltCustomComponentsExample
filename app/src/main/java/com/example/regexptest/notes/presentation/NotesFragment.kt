@@ -9,7 +9,7 @@ import com.example.regexptest.R
 import com.example.regexptest.databinding.FragmentNotesBinding
 import com.example.regexptest.databinding.TestPlateBinding
 import com.example.regexptest.notes.di.NotesApp
-import com.example.regexptest.smoothie.di.singleton.CustomSingletonEntryPoint
+import com.example.regexptest.smoothie.di.viewmodel.SmoothieViewModelEntryPoint
 import com.example.regexptest.smoothie.presentation.SmoothieFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,7 +23,7 @@ class NotesFragment : SmoothieFragment() {
 
     @Inject
     @NotesApp
-    override lateinit var customSingletonEntryPoint: CustomSingletonEntryPoint
+    override lateinit var viewModelEntryPoint: SmoothieViewModelEntryPoint
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

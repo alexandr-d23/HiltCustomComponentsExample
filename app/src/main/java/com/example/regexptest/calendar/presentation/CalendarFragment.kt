@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.regexptest.R
 import com.example.regexptest.calendar.di.CalendarApp
 import com.example.regexptest.databinding.FragmentCalendarBinding
-import com.example.regexptest.smoothie.di.singleton.CustomSingletonEntryPoint
+import com.example.regexptest.smoothie.di.viewmodel.SmoothieViewModelEntryPoint
 import com.example.regexptest.smoothie.presentation.SmoothieFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -21,7 +21,7 @@ class CalendarFragment : SmoothieFragment() {
 
     @Inject
     @CalendarApp
-    override lateinit var customSingletonEntryPoint: CustomSingletonEntryPoint
+    override lateinit var viewModelEntryPoint: SmoothieViewModelEntryPoint
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

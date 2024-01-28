@@ -4,6 +4,8 @@ import com.example.regexptest.notes.data.RoomLocalSource
 import com.example.regexptest.smoothie.di.singleton.CustomSingletonEntryPoint
 import com.example.regexptest.smoothie.di.singleton.SmoothieSingletonComponentBuilder
 import com.example.regexptest.smoothie.data.LocalSource
+import com.example.regexptest.smoothie.di.viewmodel.SmoothieViewModelComponentBuilder
+import com.example.regexptest.smoothie.di.viewmodel.SmoothieViewModelEntryPoint
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.EntryPoints
@@ -30,6 +32,20 @@ class NotesModule {
                 .localSource(localSource)
                 .build(),
             CustomSingletonEntryPoint::class.java
+        )
+    }
+
+    @Provides
+    @NotesApp
+    fun provideSmoothieViewModelEntryPoint(
+        @NotesApp singletonEntryPoint: CustomSingletonEntryPoint,
+        viewModelComponentBuilder: SmoothieViewModelComponentBuilder,
+    ): SmoothieViewModelEntryPoint {
+        return EntryPoints.get(
+            viewModelComponentBuilder
+                .singletonDependencies(singletonEntryPoint)
+                .build(),
+            SmoothieViewModelEntryPoint::class.java
         )
     }
 

@@ -3,8 +3,7 @@ package com.example.regexptest.smoothie.presentation
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.regexptest.smoothie.di.singleton.CustomSingletonEntryPoint
-import com.example.regexptest.smoothie.di.viewmodel.SmoothieViewModelComponentBuilder
+import com.example.regexptest.smoothie.di.viewmodel.SmoothieViewModelEntryPoint
 import com.example.regexptest.smoothie.presentation.viewmodel.SmoothieViewModel
 import com.example.regexptest.smoothie.presentation.viewmodel.SmoothieViewModelFactory
 import com.example.regexptest.smoothie.presentation.viewmodel.SmoothieViewModelProvider
@@ -16,16 +15,12 @@ abstract class SmoothieFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: SmoothieViewModelFactory
-    @Inject
-    lateinit var viewModelComponentBuilder: SmoothieViewModelComponentBuilder
-
-    abstract val customSingletonEntryPoint: CustomSingletonEntryPoint
+    abstract val viewModelEntryPoint: SmoothieViewModelEntryPoint
 
     private val smoothieViewModel: SmoothieViewModel by viewModels {
         SmoothieViewModelProvider.provideFactory(
             assistedFactory = viewModelFactory,
-            viewModelComponentBuilder = viewModelComponentBuilder,
-            singletonEntryPoint = customSingletonEntryPoint,
+            viewModelEntryPoint = viewModelEntryPoint,
         )
     }
 
