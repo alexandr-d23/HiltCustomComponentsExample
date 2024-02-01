@@ -8,7 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
 @DefineComponent(parent = SingletonComponent::class)
-@SmoothieViewModel
+@SmoothieViewModelScoped
 interface SmoothieFragmentComponent
 
 @DefineComponent.Builder

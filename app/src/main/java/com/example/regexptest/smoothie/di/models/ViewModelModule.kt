@@ -1,7 +1,7 @@
 package com.example.regexptest.smoothie.di.models
 
 import com.example.regexptest.smoothie.di.components.CustomSingletonEntryPoint
-import com.example.regexptest.smoothie.di.components.SmoothieViewModel
+import com.example.regexptest.smoothie.di.components.SmoothieViewModelScoped
 import com.example.regexptest.smoothie.di.components.SmoothieViewModelComponent
 import com.example.regexptest.smoothie.domain.SmoothieInteractor
 import dagger.Module
@@ -13,7 +13,7 @@ import dagger.hilt.InstallIn
 class ViewModelModule {
 
     @Provides
-    @SmoothieViewModel
+    @SmoothieViewModelScoped
     fun provideInteractor(
         dependencies: CustomSingletonEntryPoint,
     ): SmoothieInteractor {

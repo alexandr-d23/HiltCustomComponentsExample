@@ -32,11 +32,12 @@ class CalendarModule {
         @CalendarApp localSource: LocalSource,
         singletonEntryPointBuilder: SmoothieSingletonComponentBuilder,
     ): CustomSingletonEntryPoint {
+        val component = singletonEntryPointBuilder
+            .appId(appId)
+            .localSource(localSource)
+            .build()
         return EntryPoints.get(
-            singletonEntryPointBuilder
-                .appId(appId)
-                .localSource(localSource)
-                .build(),
+            component,
             CustomSingletonEntryPoint::class.java
         )
     }

@@ -2,9 +2,9 @@ package com.example.regexptest.smoothie.domain
 
 import android.util.Log
 import com.example.regexptest.smoothie.data.SmoothieRepository
-import com.example.regexptest.smoothie.di.components.SmoothieViewModel
+import com.example.regexptest.smoothie.di.components.SmoothieViewModelScoped
 
-@SmoothieViewModel
+@SmoothieViewModelScoped
 class SmoothieInteractor(
     private val appId: String,
     private val repository: SmoothieRepository,

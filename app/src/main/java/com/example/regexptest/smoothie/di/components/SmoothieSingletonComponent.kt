@@ -12,10 +12,10 @@ import javax.inject.Scope
 @Scope
 @MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
-annotation class SmoothieSingleton
+annotation class SmoothieSingletonScoped
 
 @DefineComponent(parent = SingletonComponent::class)
-@SmoothieSingleton
+@SmoothieSingletonScoped
 interface SmoothieSingletonComponent
 
 @DefineComponent.Builder
