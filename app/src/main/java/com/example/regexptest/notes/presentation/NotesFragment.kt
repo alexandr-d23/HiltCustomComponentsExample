@@ -1,6 +1,7 @@
 package com.example.regexptest.notes.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,8 @@ import com.example.regexptest.R
 import com.example.regexptest.databinding.FragmentNotesBinding
 import com.example.regexptest.databinding.TestPlateBinding
 import com.example.regexptest.notes.di.NotesApp
-import com.example.regexptest.smoothie.di.viewmodel.SmoothieViewModelEntryPoint
+import com.example.regexptest.smoothie.di.components.SmoothieFragmentEntryPoint
+import com.example.regexptest.smoothie.di.components.SmoothieViewModelEntryPoint
 import com.example.regexptest.smoothie.presentation.SmoothieFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -25,11 +27,17 @@ class NotesFragment : SmoothieFragment() {
     @NotesApp
     override lateinit var viewModelEntryPoint: SmoothieViewModelEntryPoint
 
+    @Inject
+    @NotesApp
+    override lateinit var fragmentEntryPoint: SmoothieFragmentEntryPoint
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
+        val actionInteractor = viewModelEntryPoint.actionInteractor()
+        val webWrapper = fragmentEntryPoint.webWrapper()
+        Log.d("MYTAG", "WebWrapper = $webWrapper ; $this")
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
         return binding.root
 

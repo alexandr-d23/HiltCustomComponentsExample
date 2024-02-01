@@ -1,7 +1,7 @@
 package com.example.regexptest.smoothie.data
 
 import android.util.Log
-import com.example.regexptest.smoothie.di.singleton.SmoothieSingleton
+import com.example.regexptest.smoothie.di.components.SmoothieSingleton
 import javax.inject.Inject
 
 @SmoothieSingleton

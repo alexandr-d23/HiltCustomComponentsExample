@@ -1,4 +1,4 @@
-package com.example.regexptest.smoothie.di.singleton
+package com.example.regexptest.smoothie.di.components
 
 import com.example.regexptest.smoothie.data.SmoothieRepository
 import com.example.regexptest.smoothie.data.LocalSource

@@ -2,7 +2,7 @@ package com.example.regexptest.smoothie.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.regexptest.smoothie.di.viewmodel.SmoothieViewModelEntryPoint
+import com.example.regexptest.smoothie.di.components.SmoothieViewModelEntryPoint
 import dagger.assisted.AssistedFactory
 
 @AssistedFactory

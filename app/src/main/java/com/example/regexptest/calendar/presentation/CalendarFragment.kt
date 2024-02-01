@@ -1,6 +1,7 @@
 package com.example.regexptest.calendar.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.regexptest.R
 import com.example.regexptest.calendar.di.CalendarApp
 import com.example.regexptest.databinding.FragmentCalendarBinding
-import com.example.regexptest.smoothie.di.viewmodel.SmoothieViewModelEntryPoint
+import com.example.regexptest.smoothie.di.components.SmoothieFragmentEntryPoint
+import com.example.regexptest.smoothie.di.components.SmoothieViewModelEntryPoint
 import com.example.regexptest.smoothie.presentation.SmoothieFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,11 +25,16 @@ class CalendarFragment : SmoothieFragment() {
     @CalendarApp
     override lateinit var viewModelEntryPoint: SmoothieViewModelEntryPoint
 
+    @Inject
+    @CalendarApp
+    override lateinit var fragmentEntryPoint: SmoothieFragmentEntryPoint
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
+        val webWrapper = fragmentEntryPoint.webWrapper()
+        Log.d("MYTAG", "WebWrapper = $webWrapper ; $this")
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
         return binding.root
 

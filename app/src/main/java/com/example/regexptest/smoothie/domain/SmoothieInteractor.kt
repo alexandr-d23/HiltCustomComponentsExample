@@ -2,7 +2,7 @@ package com.example.regexptest.smoothie.domain
 
 import android.util.Log
 import com.example.regexptest.smoothie.data.SmoothieRepository
-import com.example.regexptest.smoothie.di.viewmodel.SmoothieViewModel
+import com.example.regexptest.smoothie.di.components.SmoothieViewModel
 
 @SmoothieViewModel
 class SmoothieInteractor(
