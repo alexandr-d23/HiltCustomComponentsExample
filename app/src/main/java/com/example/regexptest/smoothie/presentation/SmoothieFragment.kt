@@ -4,32 +4,22 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.regexptest.smoothie.di.components.SmoothieFragmentEntryPoint
-import com.example.regexptest.smoothie.di.components.SmoothieViewModelEntryPoint
 import com.example.regexptest.smoothie.presentation.viewmodel.SmoothieViewModel
-import com.example.regexptest.smoothie.presentation.viewmodel.SmoothieViewModelFactory
-import com.example.regexptest.smoothie.presentation.viewmodel.SmoothieViewModelProvider
+import com.example.regexptest.smoothie.presentation.viewmodel.SmoothieViewModelProviderFactory
+import dagger.Lazy
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 abstract class SmoothieFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: SmoothieViewModelFactory
-    abstract val viewModelEntryPoint: SmoothieViewModelEntryPoint
     abstract val fragmentEntryPoint: SmoothieFragmentEntryPoint
+    abstract val viewModelProviderFactory: Lazy<SmoothieViewModelProviderFactory>
 
-    private val smoothieViewModel: SmoothieViewModel by viewModels {
-        SmoothieViewModelProvider.provideFactory(
-            assistedFactory = viewModelFactory,
-            viewModelEntryPoint = viewModelEntryPoint,
-        )
-    }
+    val smoothieViewModel: SmoothieViewModel by viewModels { viewModelProviderFactory.get() }
 
     override fun onStart() {
         super.onStart()
-        val appId = smoothieViewModel.component?.singletonDependencies()?.appId()
-        Log.d("MYTAG", "AppId = $appId ; $this")
+        Log.d("MYTAG", "$this")
         smoothieViewModel.doSomething()
     }
 }

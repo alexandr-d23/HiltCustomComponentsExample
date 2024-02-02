@@ -10,8 +10,9 @@ import com.example.regexptest.R
 import com.example.regexptest.calendar.di.CalendarApp
 import com.example.regexptest.databinding.FragmentCalendarBinding
 import com.example.regexptest.smoothie.di.components.SmoothieFragmentEntryPoint
-import com.example.regexptest.smoothie.di.components.SmoothieViewModelEntryPoint
 import com.example.regexptest.smoothie.presentation.SmoothieFragment
+import com.example.regexptest.smoothie.presentation.viewmodel.SmoothieViewModelProviderFactory
+import dagger.Lazy
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -23,7 +24,7 @@ class CalendarFragment : SmoothieFragment() {
 
     @Inject
     @CalendarApp
-    override lateinit var viewModelEntryPoint: SmoothieViewModelEntryPoint
+    override lateinit var viewModelProviderFactory: Lazy<SmoothieViewModelProviderFactory>
 
     @Inject
     @CalendarApp
@@ -34,10 +35,9 @@ class CalendarFragment : SmoothieFragment() {
         savedInstanceState: Bundle?
     ): View {
         val webWrapper = fragmentEntryPoint.webWrapper()
-        Log.d("MYTAG", "WebWrapper = $webWrapper ; $this")
+        Log.d("MYTAG", "AppId = ${smoothieViewModel.appId} ; WebWrapper = $webWrapper ; $this")
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

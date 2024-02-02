@@ -11,8 +11,9 @@ import com.example.regexptest.databinding.FragmentNotesBinding
 import com.example.regexptest.databinding.TestPlateBinding
 import com.example.regexptest.notes.di.NotesApp
 import com.example.regexptest.smoothie.di.components.SmoothieFragmentEntryPoint
-import com.example.regexptest.smoothie.di.components.SmoothieViewModelEntryPoint
 import com.example.regexptest.smoothie.presentation.SmoothieFragment
+import com.example.regexptest.smoothie.presentation.viewmodel.SmoothieViewModelProviderFactory
+import dagger.Lazy
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -25,7 +26,7 @@ class NotesFragment : SmoothieFragment() {
 
     @Inject
     @NotesApp
-    override lateinit var viewModelEntryPoint: SmoothieViewModelEntryPoint
+    override lateinit var viewModelProviderFactory: Lazy<SmoothieViewModelProviderFactory>
 
     @Inject
     @NotesApp
@@ -35,12 +36,10 @@ class NotesFragment : SmoothieFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val actionInteractor = viewModelEntryPoint.actionInteractor()
         val webWrapper = fragmentEntryPoint.webWrapper()
-        Log.d("MYTAG", "WebWrapper = $webWrapper ; $this")
+        Log.d("MYTAG", "AppId = ${smoothieViewModel.appId} ; WebWrapper = $webWrapper ; $this")
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

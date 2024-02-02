@@ -8,7 +8,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
 @DefineComponent(parent = SingletonComponent::class)
-@SmoothieViewModelScoped
 interface SmoothieFragmentComponent
 
 @DefineComponent.Builder
@@ -16,10 +15,6 @@ interface SmoothieFragmentComponentBuilder {
 
     fun singletonDependencies(
         @BindsInstance dependencies: CustomSingletonEntryPoint
-    ): SmoothieFragmentComponentBuilder
-
-    fun viewModelDependencies(
-        @BindsInstance dependencies: SmoothieViewModelEntryPoint
     ): SmoothieFragmentComponentBuilder
 
     fun webWrapper(
@@ -33,6 +28,5 @@ interface SmoothieFragmentComponentBuilder {
 @InstallIn(SmoothieFragmentComponent::class)
 interface SmoothieFragmentEntryPoint {
     fun singletonDependencies(): CustomSingletonEntryPoint
-    fun viewModelDependencies(): SmoothieViewModelEntryPoint
     fun webWrapper(): WebWrapper
 }

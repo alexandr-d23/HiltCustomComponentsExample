@@ -12,6 +12,8 @@ import com.example.regexptest.smoothie.di.components.SmoothieViewModelComponentB
 import com.example.regexptest.smoothie.di.components.SmoothieViewModelEntryPoint
 import com.example.regexptest.smoothie.domain.ActionInteractor
 import com.example.regexptest.smoothie.presentation.WebWrapper
+import com.example.regexptest.smoothie.presentation.viewmodel.SmoothieViewModelFactory
+import com.example.regexptest.smoothie.presentation.viewmodel.SmoothieViewModelProviderFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.EntryPoints
@@ -32,12 +34,12 @@ class CalendarModule {
         @CalendarApp localSource: LocalSource,
         singletonEntryPointBuilder: SmoothieSingletonComponentBuilder,
     ): CustomSingletonEntryPoint {
-        val component = singletonEntryPointBuilder
+        val singletonComponent = singletonEntryPointBuilder
             .appId(appId)
             .localSource(localSource)
             .build()
         return EntryPoints.get(
-            component,
+            singletonComponent,
             CustomSingletonEntryPoint::class.java
         )
     }
@@ -49,11 +51,12 @@ class CalendarModule {
         viewModelComponentBuilder: SmoothieViewModelComponentBuilder,
         @CalendarApp actionInteractor: ActionInteractor,
     ): SmoothieViewModelEntryPoint {
+        val viewModelComponent = viewModelComponentBuilder
+            .singletonDependencies(singletonEntryPoint)
+            .actionInteractor(actionInteractor)
+            .build()
         return EntryPoints.get(
-            viewModelComponentBuilder
-                .singletonDependencies(singletonEntryPoint)
-                .actionInteractor(actionInteractor)
-                .build(),
+            viewModelComponent,
             SmoothieViewModelEntryPoint::class.java
         )
     }
@@ -62,17 +65,31 @@ class CalendarModule {
     @CalendarApp
     fun provideSmoothieFragmentEntryPoint(
         @CalendarApp singletonEntryPoint: CustomSingletonEntryPoint,
-        @CalendarApp viewModelEntryPoint: SmoothieViewModelEntryPoint,
         fragmentComponentBuilder: SmoothieFragmentComponentBuilder,
         @CalendarApp webWrapper: WebWrapper,
     ): SmoothieFragmentEntryPoint {
+        val fragmentComponent = fragmentComponentBuilder
+            .singletonDependencies(singletonEntryPoint)
+            .webWrapper(webWrapper)
+            .build()
         return EntryPoints.get(
-            fragmentComponentBuilder
-                .singletonDependencies(singletonEntryPoint)
-                .viewModelDependencies(viewModelEntryPoint)
-                .webWrapper(webWrapper)
-                .build(),
+            fragmentComponent,
             SmoothieFragmentEntryPoint::class.java
+        )
+    }
+
+    @Provides
+    @CalendarApp
+    fun provideSmoothieViewModelProviderFactory(
+        viewModelFactory: SmoothieViewModelFactory,
+        @CalendarApp singletonEntryPoint: CustomSingletonEntryPoint,
+        @CalendarApp viewModelEntryPoint: SmoothieViewModelEntryPoint,
+    ): SmoothieViewModelProviderFactory {
+        return SmoothieViewModelProviderFactory(
+            assistedFactory = viewModelFactory,
+            smoothieInteractor = viewModelEntryPoint.interactor(),
+            actionInteractor = viewModelEntryPoint.actionInteractor(),
+            appId = singletonEntryPoint.appId()
         )
     }
 
