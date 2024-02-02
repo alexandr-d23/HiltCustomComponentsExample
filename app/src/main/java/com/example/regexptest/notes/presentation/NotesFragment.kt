@@ -1,36 +1,44 @@
-package com.example.regexptest
+package com.example.regexptest.notes.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.regexptest.databinding.FragmentFirstBinding
+import com.example.regexptest.R
+import com.example.regexptest.databinding.FragmentNotesBinding
 import com.example.regexptest.databinding.TestPlateBinding
+import com.example.regexptest.notes.di.NotesApp
+import com.example.regexptest.smoothie.di.components.SmoothieFragmentEntryPoint
+import com.example.regexptest.smoothie.di.components.SmoothieViewModelEntryPoint
 import com.example.regexptest.smoothie.presentation.SmoothieFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 @AndroidEntryPoint
-class FirstFragment : SmoothieFragment() {
+class NotesFragment : SmoothieFragment() {
 
-    private var _binding: FragmentFirstBinding? = null
+    private var _binding: FragmentNotesBinding? = null
     private lateinit var testPlate: TestPlateBinding
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-    override val appId: String = "First"
+
+    @Inject
+    @NotesApp
+    override lateinit var viewModelEntryPoint: SmoothieViewModelEntryPoint
+
+    @Inject
+    @NotesApp
+    override lateinit var fragmentEntryPoint: SmoothieFragmentEntryPoint
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+    ): View {
+        val actionInteractor = viewModelEntryPoint.actionInteractor()
+        val webWrapper = fragmentEntryPoint.webWrapper()
+        Log.d("MYTAG", "WebWrapper = $webWrapper ; $this")
+        _binding = FragmentNotesBinding.inflate(inflater, container, false)
         return binding.root
 
     }
