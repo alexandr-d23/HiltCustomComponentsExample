@@ -10,9 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import com.example.regexptest.databinding.ActivityMainBinding
-import dagger.hilt.EntryPoints
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
